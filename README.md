@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crono App
 
-## Getting Started
+Ferramenta pessoal de cronoanálise — cálculo de tempo-padrão, takt time e balanceamento de linha, feita para uso próprio no dia a dia de engenharia de métodos.
 
-First, run the development server:
+## Status
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🚧 Em desenvolvimento. Por enquanto:
+
+- [x] Tipos do domínio (`Elemento`, `Posto`, `Tolerancias`)
+- [x] Cálculo de tempo observado médio
+- [x] Cálculo de tempo normal (fator de ritmo)
+- [x] Cálculo de tempo-padrão (tolerâncias)
+- [ ] Takt time
+- [ ] Balanceamento de linha (gráfico yamazumi)
+- [ ] Interface (formulários e resultados)
+
+## Stack
+
+- [Next.js](https://nextjs.org) + TypeScript
+- Tailwind CSS
+
+## Fórmulas
+
+```
+Tempo Normal  = Tempo Observado Médio × (Fator de Ritmo / 100)
+Tempo Padrão  = Tempo Normal × (1 + soma das tolerâncias)
+Takt Time     = Tempo Disponível / Demanda
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rodando localmente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Abre [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Estrutura
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/            → páginas e layout (Next.js App Router)
+types/          → tipos do domínio (Elemento, Posto, Tolerancias)
+lib/            → lógica de cálculo (tempo-padrão, takt time, balanceamento)
+```
