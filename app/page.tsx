@@ -1,13 +1,25 @@
 import Image from "next/image";
-import { tempoObservadoMedio, calcularTempoNormal, calcularTempoPadrao } from "../lib/calculations";
+import { processarElemento, agruparPorPosto, calcularBalanceamento } from "../lib/calculations";
 
-const media = tempoObservadoMedio([12, 14, 13]);
-const normal = calcularTempoNormal(media, 110);
-const padrao = calcularTempoPadrao(normal, { pessoais: 5, fadiga: 4, especiais: 0 });
+const tolerancias = { pessoais: 5, fadiga: 4, especiais: 0 };
+const postos = [
+  { id: "posto-1", nome: "Corte" },
+  { id: "posto-2", nome: "Montagem" },
+];
+const elementos = [
+  { nome: "Cortar fio", leituras: [10, 11, 9], fatorRitmo: 100, postoId: "posto-1" },
+  { nome: "Inserir terminal", leituras: [12, 14, 13], fatorRitmo: 110, postoId: "posto-2" },
+];
 
-console.log("Tempo observado médio:", media);
-console.log("Tempo normal (110%):", normal);
-console.log("Tempo padrão (tolerância 9%):", padrao);
+const resultadosElementos = elementos.map((el) => processarElemento(el, tolerancias));
+const postosAgrupados = agruparPorPosto(postos, resultadosElementos);
+const balanceamento = calcularBalanceamento(postosAgrupados, {
+  demanda: 400,
+  tempoDisponivelMin: 480,
+});
+
+console.log("Balanceamento:", balanceamento);
+
 
 export default function Home() {
   return (
