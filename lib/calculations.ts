@@ -8,6 +8,13 @@ import type {
   ResultadoBalanceamento
 } from "../types/cronoanalise";
 
+export type UnidadeTempo = "segundos" | "minutos";
+
+// Converte um valor pra segundos 
+export function paraSegundos(valor: number, unidade: UnidadeTempo): number {
+  return unidade === "minutos" ? valor * 60 : valor;
+}
+
 export function tempoObservadoMedio(leituras: number[]): number {
   if (leituras.length === 0) {
     return 0;
