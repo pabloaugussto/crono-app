@@ -45,29 +45,22 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
     onChange(elementos.filter((_, i) => i !== index));
   }
 
-  return (
-    <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-      <div className="flex items-center gap-2 mb-1">
-        <span className="w-6 h-6 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">
-          2
-        </span>
-        <h2 className="text-sm font-semibold text-slate-900">
-          Elementos cronometrados
-        </h2>
+    return (
+    <div className="border-l-2 border-structural/40 pl-6">
+      <div className="flex items-baseline gap-2 mb-1">
+        <span className="font-mono text-xs text-structural">02</span>
+        <h2 className="text-sm font-semibold text-ink">Elementos cronometrados</h2>
       </div>
-      <p className="text-xs text-slate-400 mb-4 ml-8">
-        Um elemento é uma tarefa (ou o ciclo completo) cronometrado dentro de um
-        posto.
+      <p className="text-xs text-ink-soft/70 mb-4">
+        Um elemento é uma tarefa (ou o ciclo completo) cronometrado dentro de um posto.
       </p>
 
       {postos.length === 0 ? (
-        <p className="text-sm text-slate-400 italic">
-          Cadastre um posto primeiro.
-        </p>
+        <p className="text-sm text-ink-soft/60 italic">Cadastre um posto primeiro.</p>
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2 mb-2">
-            <label className="flex flex-col gap-1 text-xs text-slate-500">
+            <label className="flex flex-col gap-1 text-xs text-ink-soft">
               Nome do elemento
               <input
                 id="nome-elemento"
@@ -75,58 +68,54 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="ex: Ciclo completo"
-                className="border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm text-ink placeholder:text-ink-soft/50 outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               />
             </label>
 
-            <label className="flex flex-col gap-1 text-xs text-slate-500">
+            <label className="flex flex-col gap-1 text-xs text-ink-soft">
               Posto
               <select
                 id="posto-elemento"
                 name="posto-elemento"
                 value={postoId || postos[0].id}
                 onChange={(e) => setPostoId(e.target.value)}
-                className="border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               >
                 {postos.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.nome}
-                  </option>
+                  <option key={p.id} value={p.id}>{p.nome}</option>
                 ))}
               </select>
             </label>
           </div>
 
           <div className="grid grid-cols-[1fr_110px_120px] gap-2 mb-3">
-            <label className="flex flex-col gap-1 text-xs text-slate-500">
+            <label className="flex flex-col gap-1 text-xs text-ink-soft">
               Tempos cronometrados
               <input
                 id="leituras-elemento"
                 name="leituras-elemento"
                 value={leiturasTexto}
                 onChange={(e) => setLeiturasTexto(e.target.value)}
-                placeholder={
-                  unidade === "minutos" ? "ex: 25, 24, 26" : "ex: 12, 14, 13"
-                }
-                className="border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-900 placeholder:text-slate-400 placeholder:font-sans outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder={unidade === "minutos" ? "ex: 25, 24, 26" : "ex: 12, 14, 13"}
+                className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm font-mono text-ink placeholder:text-ink-soft/50 placeholder:font-sans outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               />
             </label>
 
-            <label className="flex flex-col gap-1 text-xs text-slate-500">
+            <label className="flex flex-col gap-1 text-xs text-ink-soft">
               Unidade
               <select
                 id="unidade-leitura"
                 name="unidade-leitura"
                 value={unidade}
                 onChange={(e) => setUnidade(e.target.value as UnidadeTempo)}
-                className="border border-slate-300 rounded-lg px-2 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="border border-ink/15 bg-paper rounded-md px-2 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               >
                 <option value="segundos">segundos</option>
                 <option value="minutos">minutos</option>
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-xs text-slate-500">
+            <label className="flex flex-col gap-1 text-xs text-ink-soft">
               Ritmo (%)
               <input
                 id="fator-ritmo"
@@ -134,14 +123,14 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
                 value={fatorRitmo}
                 onChange={(e) => setFatorRitmo(e.target.value)}
                 placeholder="100"
-                className="border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm font-mono text-ink placeholder:text-ink-soft/50 outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               />
             </label>
           </div>
 
           <button
             onClick={adicionar}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors mb-3"
+            className="bg-accent-dark text-paper px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity mb-3"
           >
             Adicionar elemento
           </button>
@@ -151,18 +140,16 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
               {elementos.map((el, i) => (
                 <li
                   key={i}
-                  className="flex justify-between items-center bg-slate-50 rounded-lg px-3 py-2 text-sm text-slate-700"
+                  className="flex justify-between items-center bg-ink/5 rounded-md px-3 py-2 text-sm text-ink"
                 >
                   <span>
-                    <span className="font-medium text-slate-900">
-                      {el.nome}
-                    </span>
+                    <span className="font-medium text-ink">{el.nome}</span>
                     {" — "}
                     {el.leituras.length} leitura(s), ritmo {el.fatorRitmo}%
                   </span>
                   <button
                     onClick={() => remover(i)}
-                    className="text-red-500 hover:text-red-700 text-xs font-medium"
+                    className="text-red-700 hover:text-red-800 text-xs font-medium"
                   >
                     remover
                   </button>

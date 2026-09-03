@@ -29,22 +29,16 @@ export default function PostosPanel({ postos, onChange }: Props) {
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="w-6 h-6 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">
-          1
-        </span>
-
-        <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-sm font-semibold text-slate-900">
-            Postos de trabalho
-          </h2>
-        </div>
-        <p className="text-xs text-slate-400 mb-4 ml-8">
-          Cada posto é uma estação da linha (ex: "Corte", "Montagem"). Os
-          elementos cronometrados serão agrupados dentro de um posto.
-        </p>
+    <div className="border-l-2 border-structural/40 pl-6">
+      <div className="flex items-baseline gap-2 mb-1">
+        <span className="font-mono text-xs text-structural">01</span>
+        <h2 className="text-sm font-semibold text-ink">Postos de trabalho</h2>
       </div>
+      <p className="text-xs text-ink-soft/70 mb-4">
+        Cada posto é uma estação da linha (ex: &quot;Corte&quot;,
+        &quot;Montagem&quot;). Os elementos cronometrados serão agrupados dentro
+        de um posto.
+      </p>
 
       <div className="flex gap-2 mb-3">
         <input
@@ -54,18 +48,18 @@ export default function PostosPanel({ postos, onChange }: Props) {
           onChange={(e) => setNome(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && adicionar()}
           placeholder="Nome do posto"
-          className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          className="flex-1 border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm text-ink placeholder:text-ink-soft/50 outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <button
           onClick={adicionar}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+          className="bg-accent-dark text-paper px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
         >
           Adicionar
         </button>
       </div>
 
       {postos.length === 0 ? (
-        <p className="text-sm text-slate-400 italic">
+        <p className="text-sm text-ink-soft/60 italic">
           Nenhum posto cadastrado ainda.
         </p>
       ) : (
@@ -73,12 +67,12 @@ export default function PostosPanel({ postos, onChange }: Props) {
           {postos.map((p) => (
             <li
               key={p.id}
-              className="flex justify-between items-center bg-slate-50 rounded-lg px-3 py-2 text-sm text-slate-700"
+              className="flex justify-between items-center bg-ink/5 rounded-md px-3 py-2 text-sm text-ink"
             >
               {p.nome}
               <button
                 onClick={() => remover(p.id)}
-                className="text-red-500 hover:text-red-700 text-xs font-medium"
+                className="text-red-700 hover:text-red-800 text-xs font-medium"
               >
                 remover
               </button>
