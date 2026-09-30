@@ -1,21 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { paraSegundos, type UnidadeTempo } from "../lib/calculations";
 import type { Elemento, Posto } from "../types/cronoanalise";
+import { paraSegundos, type UnidadeTempo } from "../lib/calculations";
 
 interface Props {
   postos: Posto[];
   elementos: Elemento[];
   onChange: (elementos: Elemento[]) => void;
+  voltas: number[];
+  onVoltasChange: (voltas: number[]) => void;
 }
 
-export default function ElementosPanel({ postos, elementos, onChange }: Props) {
+export default function ElementosPanel({
+  postos,
+  elementos,
+  onChange,
+  voltas = [],
+  onVoltasChange,
+}: Props) {
   const [nome, setNome] = useState("");
   const [postoId, setPostoId] = useState("");
   const [leiturasTexto, setLeiturasTexto] = useState("");
   const [fatorRitmo, setFatorRitmo] = useState("100");
   const [unidade, setUnidade] = useState<UnidadeTempo>("segundos");
+
+  function usarVoltas() {
+    setLeiturasTexto(voltas.map((v) => v.toFixed(1)).join(", "));
+    setUnidade("segundos");
+    onVoltasChange([]);
+  }
 
   function adicionar() {
     const nomeLimpo = nome.trim();
@@ -45,18 +59,23 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
     onChange(elementos.filter((_, i) => i !== index));
   }
 
-    return (
+  return (
     <div className="border-l-2 border-structural/40 pl-6">
       <div className="flex items-baseline gap-2 mb-1">
         <span className="font-mono text-xs text-structural">02</span>
-        <h2 className="text-sm font-semibold text-ink">Elementos cronometrados</h2>
+        <h2 className="text-sm font-semibold text-ink">
+          Elementos cronometrados
+        </h2>
       </div>
       <p className="text-xs text-ink-soft/70 mb-4">
-        Um elemento é uma tarefa (ou o ciclo completo) cronometrado dentro de um posto.
+        Um elemento é uma tarefa (ou o ciclo completo) cronometrado dentro de um
+        posto.
       </p>
 
       {postos.length === 0 ? (
-        <p className="text-sm text-ink-soft/60 italic">Cadastre um posto primeiro.</p>
+        <p className="text-sm text-ink-soft/60 italic">
+          Cadastre um posto primeiro.
+        </p>
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2 mb-2">
@@ -82,11 +101,22 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
                 className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm text-ink outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               >
                 {postos.map((p) => (
-                  <option key={p.id} value={p.id}>{p.nome}</option>
+                  <option key={p.id} value={p.id}>
+                    {p.nome}
+                  </option>
                 ))}
               </select>
             </label>
           </div>
+
+          {voltas.length > 0 && (
+            <button
+              onClick={usarVoltas}
+              className="text-xs text-accent-dark hover:underline mb-2"
+            >
+              Usar as {voltas.length} volta(s) do cronômetro
+            </button>
+          )}
 
           <div className="grid grid-cols-[1fr_110px_120px] gap-2 mb-3">
             <label className="flex flex-col gap-1 text-xs text-ink-soft">
@@ -96,7 +126,9 @@ export default function ElementosPanel({ postos, elementos, onChange }: Props) {
                 name="leituras-elemento"
                 value={leiturasTexto}
                 onChange={(e) => setLeiturasTexto(e.target.value)}
-                placeholder={unidade === "minutos" ? "ex: 25, 24, 26" : "ex: 12, 14, 13"}
+                placeholder={
+                  unidade === "minutos" ? "ex: 25, 24, 26" : "ex: 12, 14, 13"
+                }
                 className="border border-ink/15 bg-paper rounded-md px-3 py-2 text-sm font-mono text-ink placeholder:text-ink-soft/50 placeholder:font-sans outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
               />
             </label>

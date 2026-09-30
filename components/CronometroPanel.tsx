@@ -9,10 +9,15 @@ function formatarTempo(ms: number): string {
   return `${minutos.toString().padStart(2, "0")}:${segundos.padStart(4, "0")}`;
 }
 
-export default function CronometroPanel() {
+export default function CronometroPanel({
+  voltas = [],
+  onVoltasChange,
+}: {
+  voltas: number[];
+  onVoltasChange: (voltas: number[]) => void;
+}) {
   const [rodando, setRodando] = useState(false);
   const [tempoDecorrido, setTempoDecorrido] = useState(0);
-  const [voltas, setVoltas] = useState<number[]>([]);
   const inicioRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -28,14 +33,14 @@ export default function CronometroPanel() {
   }, [rodando]);
 
   function iniciar() {
-    inicioRef.current = performance.now() - tempoDecorrido; // permite retomar após pausar
+    inicioRef.current = performance.now() - tempoDecorrido;
     setRodando(true);
   }
 
   function marcarVolta() {
     if (!rodando || inicioRef.current === null) return;
     const totalSegundos = (performance.now() - inicioRef.current) / 1000;
-    setVoltas((prev) => [...prev, totalSegundos]);
+    onVoltasChange([...voltas, totalSegundos]);
   }
 
   function parar() {
@@ -45,15 +50,16 @@ export default function CronometroPanel() {
   function zerar() {
     setRodando(false);
     setTempoDecorrido(0);
-    setVoltas([]);
+    onVoltasChange([]);
     inicioRef.current = null;
   }
 
-    return (
+  return (
     <div className="border border-structural/30 rounded-lg p-6 bg-ink/[0.02]">
       <h2 className="text-sm font-semibold text-ink mb-1">Cronômetro</h2>
       <p className="text-xs text-ink-soft/70 mb-4">
-        Cronometre ao vivo e capture voltas — depois é só usar esses tempos como leituras de um elemento.
+        Cronometre ao vivo e capture voltas — depois é só usar esses tempos como
+        leituras de um elemento.
       </p>
 
       <div className="text-center mb-4">

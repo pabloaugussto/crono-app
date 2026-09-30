@@ -9,6 +9,7 @@ import ElementosPanel from "../components/ElementosPanel";
 import ParametrosPanel from "../components/ParametrosPanel";
 
 export default function Home() {
+  const [voltas, setVoltas] = useState<number[]>([]);
   const [postos, setPostos] = useState<Posto[]>([]);
   const [elementos, setElementos] = useState<Elemento[]>([]);
   const [tolerancias, setTolerancias] = useState<Tolerancias>({
@@ -44,12 +45,12 @@ export default function Home() {
       </header>
 
       <div className="mb-8">
-        <CronometroPanel />
+        <CronometroPanel voltas={voltas} onVoltasChange={setVoltas} />
       </div>
 
       <div className="space-y-8 mb-8">
         <PostosPanel postos={postos} onChange={setPostos} />
-        <ElementosPanel postos={postos} elementos={elementos} onChange={setElementos} />
+        <ElementosPanel postos={postos} elementos={elementos} onChange={setElementos} voltas={voltas} onVoltasChange={setVoltas} />
         <ParametrosPanel
           tolerancias={tolerancias}
           onToleranciasChange={setTolerancias}
